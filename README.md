@@ -57,7 +57,15 @@ User password can be found in [postgres/db_init.sql](postgres/db_init.sql).
 API service is exposed on port 8000 in `docker-compose.yaml`, `locust` stress test should be run with the following command
 on the machine running `docker-compose` (with previously activated virtual environment).
 
+(wait statements in `api_stress_test.py` have been commented out intentionally)
+
 ```bash
-locust -f stress_test/api_stress_test.py --headless -u 20 -r 5 --run-time 1m
+cd stress_test
+locust -f api_stress_test.py --headless -u 20 -r 5 --run-time 1m
 ```
 
+Stress test results for 100 workers (total RAM was below 16 GB during the test, including IDE)
+![stress test 100 workers](./docs/stress_test_results_no_wait_100_workers_16GB_os_RAM_total.png)
+
+Frontend app during stress tests
+![stress_test_fe](./docs/frontend_app_during_stress_test.png)

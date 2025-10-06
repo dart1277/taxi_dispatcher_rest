@@ -14,7 +14,7 @@ class TripModel(CommonMixin, Base):
         ForeignKey("ordermodels.id"), unique=True, nullable=True
     )
     taxi_id: Mapped[int | None] = mapped_column(
-        ForeignKey("taximodels.id"), unique=True, nullable=True
+        ForeignKey("taximodels.id"), nullable=True
     )
     order: Mapped[OrderModel | None] = relationship(
         OrderModel,

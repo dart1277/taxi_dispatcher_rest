@@ -1,0 +1,4 @@
+N_REQUESTS=1
+INTERVAL=1
+WAIT_TIME=5
+API_URL="http://localhost:8000"

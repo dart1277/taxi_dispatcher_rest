@@ -1,9 +1,8 @@
-from sqlalchemy import String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, composite, relationship
-
 from application.db.model.common import Position, TaxiStatus
 from application.db.model.order import OrderModel
 from infrastructure.db.config import Base, CommonMixin
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, composite, relationship
 
 
 class TaxiModel(CommonMixin, Base):
@@ -24,8 +23,10 @@ class TaxiModel(CommonMixin, Base):
     cur = composite(Position, cur_x, cur_y)
 
     def update_position(self, data: "TaxiUpdateStatusRequestDto") -> None:
-        if not self.order_id and data.status != TaxiStatus.DELIVERED:
+
+        if not self.order_id and data.status != TaxiStatus.DELIVERED and data.status != TaxiStatus.OFFLINE:
             raise RuntimeError(f"Invalid taxi status of {self.taxi_id} {data.status}")
+
         self.status = data.status
         self.cur_x = data.cur_x
         self.cur_y = data.cur_y

@@ -23,7 +23,8 @@ async def update_taxi_status(taxi_id: str, taxi_data: TaxiUpdateStatusRequestDto
         return taxi
     taxi.update_position(taxi_data)
     await persist_taxi(taxi)
-    await update_trip_data(taxi.order.order_id, taxi_data.waiting_time_units, taxi_data.travel_time_units)
+    if taxi.order:
+        await update_trip_data(taxi.order.order_id, taxi_data.waiting_time_units, taxi_data.travel_time_units)
     return taxi
 
 

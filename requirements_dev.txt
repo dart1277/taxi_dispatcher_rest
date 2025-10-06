@@ -2,3 +2,4 @@ locust
 python-dotenv
 pytest
 dotenv-cli
+pytest-asyncio

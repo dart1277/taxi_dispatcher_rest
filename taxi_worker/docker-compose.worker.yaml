@@ -1,0 +1,14 @@
+services:
+  taxi_worker:
+    build:
+      context: .
+    restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: ${WORKER_REPLICAS:-3}
+    env_file:
+      - .dotenv
+    networks:
+      - app-network
+    depends_on:
+      - taxi_be

@@ -2,3 +2,4 @@ fastapi[standard]
 uvicorn[standard]
 SQLAlchemy[asyncio]
 asyncpg
+pydantic-settings

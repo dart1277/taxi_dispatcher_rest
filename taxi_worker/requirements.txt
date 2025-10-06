@@ -1,0 +1,3 @@
+aiohttp
+tenacity
+pydantic-settings

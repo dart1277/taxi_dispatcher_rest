@@ -1,0 +1,11 @@
+services:
+  taxi_fe:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - ${TAXI_FRONTEND_EXPOSE_PORT:-8080}:8080
+    networks:
+      - app-network
+    depends_on:
+      - taxi_be

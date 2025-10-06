@@ -1,5 +1,6 @@
 from typing import List
 
+from application.db.model.order import OrderState
 from application.db.model.trip import TripModel
 from application.db.util import with_session
 from application.dto.dispatch import TripResponseDto, TripPositionResponseDto
@@ -29,11 +30,11 @@ def to_trip_dto(trip: TripModel) -> TripResponseDto:
 
 def to_trip_position_dtos(trips: list[TripModel]) -> list[TripPositionResponseDto]:
     return [
-        TripPositionResponseDto(taxi_id=trip.taxi_id,
-                                user_id=trip.order.user_id if trip.order else None,
-                                x=trip.taxi.cur.x if trip.taxi else None,
-                                y=trip.taxi.cur.y if trip.taxi else None)
-        for trip in trips]
+        TripPositionResponseDto(taxi_id=trip.taxi.taxi_id if trip.taxi_id else None,
+                                user_id=trip.order.user_id if trip.order_id else None,
+                                x=trip.taxi.cur.x if trip.taxi_id else None,
+                                y=trip.taxi.cur.y if trip.taxi_id else None)
+        for trip in trips if trip.order_id and trip.order.state == OrderState.PLACED]
 
 
 def to_trip_dtos(trips: list[TripModel]) -> list[TripResponseDto]:
