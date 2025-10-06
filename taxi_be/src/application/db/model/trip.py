@@ -29,5 +29,21 @@ class TripModel(CommonMixin, Base):
         cascade=None
     )
 
-    waiting_time: Mapped[datetime | None] = mapped_column(nullable=True)
-    travel_time: Mapped[datetime | None] = mapped_column(nullable=True)
+    start_time: Mapped[datetime | None] = mapped_column(nullable=True)
+    waiting_time: Mapped[float | None] = mapped_column(nullable=True)
+    travel_time: Mapped[float | None] = mapped_column(nullable=True)
+
+    def update_details(self, waiting_time_units: float, travel_time_units: float) -> None:
+        if waiting_time_units:
+            self.waiting_time = waiting_time_units
+        if travel_time_units:
+            self.travel_time = travel_time_units
+
+    @classmethod
+    def start(cls, order: OrderModel, taxi: TaxiModel) -> "TripModel":
+        return cls(
+            trip_id=order.order_id,
+            taxi_id=taxi.id,
+            order_id=order.id,
+            start_time=datetime.now()
+        )

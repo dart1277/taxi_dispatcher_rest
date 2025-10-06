@@ -37,3 +37,7 @@ async def app_exception_handler(request: Request, exc: Exception):
     return await main_exception_handler(request, exc)
 
 # fastapi dev --reload src/main.py
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

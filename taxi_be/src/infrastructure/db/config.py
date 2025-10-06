@@ -14,7 +14,7 @@ logger = log.getChild(__name__)
 
 engine = create_async_engine(
     settings.db_conn_string,
-    echo=True,
+    echo=False,
     future=True,
     pool_size=10,
     max_overflow=20,
@@ -51,7 +51,7 @@ class Base(DeclarativeBase):
 async def init_db():
     logger.info(f"Initiating DB connection {settings.db_conn_string}")
     async with engine.begin() as conn:
-        # await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
 

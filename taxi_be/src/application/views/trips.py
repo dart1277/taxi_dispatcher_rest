@@ -19,11 +19,11 @@ def to_trip_dto(trip: TripModel) -> TripResponseDto:
         src_y=trip.order.src.y if trip.order_id else None,
         dst_x=trip.order.dst.x if trip.order_id else None,
         dst_y=trip.order.dst.y if trip.order_id else None,
-        taxi_id=trip.taxi_id,
-        order_id=trip.order_id,
+        taxi_id=trip.taxi.taxi_id if trip.taxi_id else None,
+        order_id=trip.order.order_id if trip.order_id else None,
         user_id=trip.order.user_id if trip.order_id else None,
-        waiting_time=trip.waiting_time.isoformat() if trip.waiting_time else None,
-        travel_time=trip.travel_time.isoformat() if trip.travel_time else None,
+        waiting_time=trip.waiting_time if trip.waiting_time else None,
+        travel_time=trip.travel_time if trip.travel_time else None,
     )
 
 

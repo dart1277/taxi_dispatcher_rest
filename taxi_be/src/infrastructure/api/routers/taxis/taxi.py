@@ -1,8 +1,10 @@
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
+from application.db.model.common import TaxiStatus
 from application.dto.dispatch import TaxiResponseDto, TaxiUpdateStatusRequestDto, TaxiRegisterWorkerRequestDto
-from application.services.taxi_service import register_taxi, find_closest_taxi
+from application.services.order_service import close_order
+from application.services.taxi_service import register_taxi, find_closest_taxi, update_taxi_status
 from application.views.taxis import to_taxi_dtos, all_taxis, to_taxi_dto, get_taxi
 
 router = APIRouter(
@@ -17,8 +19,12 @@ async def get_taxis() -> list[TaxiResponseDto]:
 
 
 @router.put("/status/{taxi_id}", status_code=202)
-async def update_taxi_status(status: TaxiUpdateStatusRequestDto) -> None:
-    ...
+async def put_taxi_status(taxi_id: str, status: TaxiUpdateStatusRequestDto) -> None:
+    taxi = await update_taxi_status(taxi_id, status)
+    if taxi and status.status == TaxiStatus.DELIVERED:
+        await close_order(taxi.order.order_id)
+    if not taxi:
+        raise HTTPException(status_code=404, detail="Not found")
 
 
 @router.post("/register/{taxi_id}", status_code=202)

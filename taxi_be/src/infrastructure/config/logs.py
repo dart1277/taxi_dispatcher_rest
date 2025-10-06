@@ -7,4 +7,4 @@ logging.basicConfig(
     stream=sys.stdout,
 )
 
-log = logging.getLogger("main")
+log = logging.getLogger("taxi_be")

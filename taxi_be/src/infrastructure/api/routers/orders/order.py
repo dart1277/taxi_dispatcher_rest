@@ -18,5 +18,4 @@ async def get_orders() -> list[OrderResponseDto]:
 @router.post("/", status_code=201)
 async def post_place_order(order_dto: PlaceOrderRequestDto) -> OrderResponseDto:
     order = await place_order(order_dto)
-    order = await cancel_order(order.order_id)
     return to_order_dto(order)

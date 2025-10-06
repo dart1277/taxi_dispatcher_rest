@@ -1,19 +1,9 @@
-from enum import StrEnum
-
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, composite, relationship
 
-from application.db.model.common import Position
+from application.db.model.common import Position, TaxiStatus
 from application.db.model.order import OrderModel
 from infrastructure.db.config import Base, CommonMixin
-
-
-class TaxiStatus(StrEnum):
-    OFFLINE = "OFFLINE"
-    DELIVERED = "DELIVERED"  # DELIVERED is an alias for IDLE, this might need to be changed in the future
-    PENDING_PICKUP = "PENDING_PICKUP"
-    PICKUP = "PICKUP"
-    DRIVING = "DRIVING"
 
 
 class TaxiModel(CommonMixin, Base):
@@ -32,3 +22,16 @@ class TaxiModel(CommonMixin, Base):
     cur_y: Mapped[int | None] = mapped_column(nullable=True)
 
     cur = composite(Position, cur_x, cur_y)
+
+    def update_position(self, data: "TaxiUpdateStatusRequestDto") -> None:
+        if not self.order_id and data.status != TaxiStatus.DELIVERED:
+            raise RuntimeError(f"Invalid taxi status of {self.taxi_id} {data.status}")
+        self.status = data.status
+        self.cur_x = data.cur_x
+        self.cur_y = data.cur_y
+        if self.order_id and data.status == TaxiStatus.DELIVERED:
+            self.order_id = None
+
+    def assign(self, order: OrderModel):
+        self.order_id = order.id
+        self.status = TaxiStatus.PENDING_PICKUP
