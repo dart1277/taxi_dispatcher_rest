@@ -1,0 +1,13 @@
+services:
+  taxi_be:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - ${TAXI_BACKEND_EXPOSE_PORT:-8000}:8000
+    env_file:
+      - .dotenv
+    networks:
+      - app-network
+    depends_on:
+      - database

@@ -1,0 +1,9 @@
+include:
+    - ./postgres/docker-compose.db.yaml
+    # - ./taxi_be/docker-compose.be.yaml
+    # - ./taxi_fe/docker-compose.fe.yaml
+    # - ./taxi_worker/docker-compose.worker.yaml
+
+networks:
+  app-network:
+    driver: bridge

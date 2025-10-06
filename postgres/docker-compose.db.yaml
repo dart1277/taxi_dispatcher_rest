@@ -1,0 +1,28 @@
+services:
+  database:
+    image: 'postgres:16'
+    ports:
+      - 15432:5432
+    env_file:
+      - .dotenv
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - ${PWD}/db-data/:/var/lib/postgresql/data/
+      - ${PWD}/postgres/db_init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    user: root # local use only!
+    restart: unless-stopped
+    ports:
+      - 15433:80
+    env_file:
+      - .dotenv
+    depends_on:
+      - database
+    networks:
+      - app-network
+    volumes:
+      - ${PWD}/pgadmin-data/:/var/lib/pgadmin/

@@ -1,0 +1,2 @@
+APP_NAME=taxi_dispatch
+DB_CONN_STRING: str = f"postgresql+asyncpg://usr:S0S1rongPsw@database:5432/taxi_db"
