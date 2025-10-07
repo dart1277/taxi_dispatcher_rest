@@ -15,8 +15,8 @@ Additionally, images above are exported to [this pdf document](./docs/es_taxi_be
 
 
 ### ADR 0.0.1 (architecture decision record)
-Developing event driven handlers with dedicated domain model objects requires significant amount of boilerplate code and at least a simple event bus or queueing system.
-Since `/order` endpoint is synchronous, for this simple system a decision was made to implement aggregate logic in the data model classes. This can be easily changes and a dedicated domain model classes can be created and mapped from the data model as the system complexity increases.
+Developing event driven handlers with dedicated domain model objects requires significant amount of boilerplate code and at least a simple event bus or queueing system to be added.
+Since `/order` endpoint is synchronous, for this simple system a decision was made to implement aggregate logic in the data model classes. This can be easily changed and a dedicated domain model classes can be created and mapped from the data model as the system complexity increases.
 
 
 ## Structure
@@ -48,7 +48,7 @@ Please run the script using a bash shell with `python 3.11` virtual environment 
 ./install_pip.bash 
 ```
 
-## Run docker-compose
+## Run docker compose
 `docker-compose.yaml` file utilizes [.env](.env) file that can be adjusted as needed. 
 To start the application please run (inside the repository root):
 Postgres and PgAdmin credentails can be defined in [postgres/.dotenv](postgres/.dotenv).
