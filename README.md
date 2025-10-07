@@ -1,6 +1,24 @@
 
 # Taxi dispatcher (REST)
 
+### Initial design
+The design process was conducted using modified version of *Event Storming* method described [on this page](https://www.avanscoperta.it/en/eventstorming/),
+please also see a book by [Alberto Brandolini](https://leanpub.com/introducing_eventstorming).
+
+###  Legend
+![legend](./docs/es_legend.png)
+### Event storming design (last phase)
+The following picture shows the last design phase where aggregates and policies have
+commands (inputs) and events (outputs) attached (event and command cards were duplicated next to relevant cards for improved readability).
+![design](./docs/es_taxi_be.png)
+Additionally, images above are exported to [this pdf document](./docs/es_taxi_be.pdf).
+
+
+### ADR 0.0.1 (architecture decision record)
+Developing event driven handlers with dedicated domain model objects requires significant amount of boilerplate code and at least a simple event bus or queueing system.
+Since `/order` endpoint is synchronous, for this simple system a decision was made to implement aggregate logic in the data model classes. This can be easily changes and a dedicated domain model classes can be created and mapped from the data model as the system complexity increases.
+
+
 ## Structure
 - `postgres` subdir contains `docker-compose` files for running PostgreSQL database
 - `stress_test` subdir  contains `locust` script for load testing the API
@@ -24,6 +42,11 @@ source .venv/bin/activate
 This project uses pip along with bash script to install dependencies (although poetry could be used as well).
 Dependency installation script is located in the [repo root](./install_pip.bash).
 Please run the script using a bash shell with `python 3.11` virtual environment already activated.
+
+```bash
+# ensure virtual environment is activated before running script
+./install_pip.bash 
+```
 
 ## Run docker-compose
 `docker-compose.yaml` file utilizes [.env](.env) file that can be adjusted as needed. 
@@ -60,6 +83,7 @@ on the machine running `docker-compose` (with previously activated virtual envir
 (wait statements in `api_stress_test.py` have been commented out intentionally)
 
 ```bash
+# ensure virtual environment is activated before running locust
 cd stress_test
 locust -f api_stress_test.py --headless -u 20 -r 5 --run-time 1m
 ```
@@ -67,5 +91,5 @@ locust -f api_stress_test.py --headless -u 20 -r 5 --run-time 1m
 Stress test results for 100 workers (total RAM was below 16 GB during the test, including IDE)
 ![stress test 100 workers](./docs/stress_test_results_no_wait_100_workers_16GB_os_RAM_total.png)
 
-Frontend app during stress tests
+Frontend app during stress tests - exposed at **http://localhost:8080**
 ![stress_test_fe](./docs/frontend_app_during_stress_test.png)

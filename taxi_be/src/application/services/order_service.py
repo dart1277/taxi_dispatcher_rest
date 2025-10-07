@@ -23,10 +23,11 @@ async def try_assign_taxi(order: OrderModel) -> None:
         if taxi:
             await assign_taxi(order, taxi)
             await start_new_trip(order, taxi)
+            logger.info(f"Taxi assigned to order: {order.order_id}")
     except Exception as e:
         logger.warn(f"Taxi assignment failed {str(e)}")
     if not taxi:
-        logger.warn(f"No available taxi found for order {order.order_id}")
+        logger.warn(f"No available taxi found for order {order.order_id}, order canceled")
         await cancel_order(order)
 
 

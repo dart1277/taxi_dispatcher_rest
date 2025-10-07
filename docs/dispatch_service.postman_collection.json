@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "a2c76de4-423c-4b90-8b51-2cae7cf379ac",
+		"name": "Dispatch Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "taxis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/taxi",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taxi trip",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/taxi/worker1234",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi",
+						"worker1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "closest taxi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/taxi/closest?src_x=50&src_y=84",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi",
+						"closest"
+					],
+					"query": [
+						{
+							"key": "src_x",
+							"value": "50"
+						},
+						{
+							"key": "src_y",
+							"value": "84"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taxi status pickup",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cur_x\": 2,\n    \"cur_y\": 1,\n    \"status\": \"PICKUP\",\n    \"waiting_time_units\": 3.5,\n    \"travel_time_units\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_url}}/taxi/status/worker1236",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi",
+						"status",
+						"worker1236"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taxi status delivered",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cur_x\": 1,\n    \"cur_y\": 100,\n    \"status\": \"DELIVERED\",\n    \"waiting_time_units\": 3.5,\n    \"travel_time_units\": 8.5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_url}}/taxi/status/worker1236",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi",
+						"status",
+						"worker1236"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taxi register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cur_x\": 98,\n    \"cur_y\": 97\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_url}}/taxi/register/worker1236",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi",
+						"register",
+						"worker1236"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "place order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"a2@a.pl\",\n    \"src_x\": 1,\n    \"src_y\": 100,\n    \"dst_x\": 9,\n    \"dst_y\": 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_url}}/order",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/order",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all trips",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/trip",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"trip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all taxis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host_url}}/taxi",
+					"host": [
+						"{{host_url}}"
+					],
+					"path": [
+						"taxi"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host_url",
+			"value": "http://localhost:8000",
+			"type": "default"
+		}
+	]
+}

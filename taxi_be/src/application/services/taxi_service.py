@@ -22,6 +22,7 @@ async def update_taxi_status(taxi_id: str, taxi_data: TaxiUpdateStatusRequestDto
         logger.warn(f"Failed taxi status updated taxi_id: {taxi_id}")
         return taxi
     taxi.update_position(taxi_data)
+    logger.info(f"Update taxi {taxi_id} status {taxi_data.status}")
     await persist_taxi(taxi)
     if taxi.order:
         await update_trip_data(taxi.order.order_id, taxi_data.waiting_time_units, taxi_data.travel_time_units)
